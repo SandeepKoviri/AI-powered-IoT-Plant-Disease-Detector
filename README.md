@@ -1,6 +1,6 @@
 AI-Powered IoT System for Plant Disease Detection and Automated Fertilizer Precision Spraying
 
-[Watch a demo of the AI-powered IoT system in action on Google Drive](https://drive.google.com/file/d/1RguORhYpgQR2I4bWk6TB-wsKrEVuRj2A/view?usp=drive_link)
+[Watch a Full Video of the AI-powered IoT system in action on Google Drive](https://drive.google.com/file/d/1RguORhYpgQR2I4bWk6TB-wsKrEVuRj2A/view?usp=drive_link)
 
 [Watch a Making video of the AI-powered IoT system in action on Google Drive](https://drive.google.com/file/d/1VeI0MQnWoe3blZJvuf_1zh6At3UTlhc7/view?usp=drive_link)
 
