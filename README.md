@@ -156,4 +156,4 @@ Total: 4 months
 🤝 Contact
 KOVIRI SANDEEP - Gmail: koviri.sandeep@gmail.com- LinkedIn : www.linkedin.com/in/kovirisandeep
 
-Project Link: [Link to this GitHub repository]
+Project Link: [[Link to this GitHub repository]](https://github.com/SandeepKoviri/AI-powered-IoT-Plant-Disease-Detector.git)
