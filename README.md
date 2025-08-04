@@ -21,16 +21,55 @@ Lower crop yield
 💡 Objective
 To build an AI-enabled IoT system that:
 
-Detects plant diseases using real-time image classification
+Detects plant diseases using real-time image classification.
 
-Automatically sprays fertilizer precisely at the diseased plant
+Automatically sprays fertilizer precisely at the diseased plant.
 
-Minimizes fertilizer usage and human labor
+Minimizes fertilizer usage and human labor.
 
-Operates in both manual and automatic modes for versatility
+Operates in both manual and automatic modes for versatility.
 
 🧠 Proposed Solution
-A smart robotic system that uses an ESP32-CAM module to scan plants for disease using a trained machine learning model. When a disease is detected, the ESP32-CAM sends coordinates to the main ESP32 board via Wi-Fi. The main board then activates a CoreXY mechanism to move a spray nozzle to the target location, triggers a fertilizer pump, and optionally alerts with a buzzer. The system resets and continues scanning the next plant.
+A smart robotic system that uses an ESP32-CAM module to scan plants for disease using a trained machine learning model. When a disease is detected, the ESP32-CAM sends coordinates to the main ESP32 board via Wi-Fi. The main board then activates a CoreXY mechanism to move a spray nozzle to the target location, triggers a fertilizer pump, and alerts with a buzzer. The system further integrates Blynk Cloud for remote monitoring, control, and real-time alerts, providing a comprehensive solution for precision agriculture. The system resets and continues scanning the next plant.
+
+⚙️ Detailed Working Principle (A to Z)
+Image Acquisition: An ESP32-CAM module continuously captures live video/images of plant leaves as it moves across rows of plants.
+
+AI-Based Disease Detection: Captured images are analyzed using a lightweight ML model deployed on the ESP32-CAM (trained with Edge Impulse). The model identifies whether a plant is healthy or diseased based on visible symptoms on the leaves.
+
+Coordinate Communication: Once a disease is detected, the ESP32-CAM transmits data via Wi-Fi to a main ESP32 controller. The data includes the detection result and the relative coordinates of the diseased plant.
+
+CoreXY Movement Control: The main ESP32 controls a CoreXY mechanism using stepper motors and drivers to precisely move a fertilizer-spraying nozzle to the diseased plant's location.
+
+Fertilizer Spraying: A relay-activated pump sprays fertilizer precisely onto the detected plant using a nozzle controlled by the CoreXY system.
+
+Siren Alert: A buzzer siren is triggered the moment disease is detected. It remains active until the spraying process is completed, then it automatically stops.
+
+Moisture Monitoring (Optional Extension): A soil moisture sensor can also be integrated to monitor watering needs alongside fertilizer spraying.
+
+Remote Monitoring with Blynk Cloud: All important parameters and events (like disease detected, pump on/off, coordinates of diseased plants, system status) are updated to the Blynk Cloud via the main ESP32 board.
+
+Blynk Mobile Dashboard: Users can access the Blynk mobile app to monitor system operations in real time. The dashboard displays sensor data, disease detection alerts, current coordinates, pump status, and system mode (manual/automatic). Users can also switch modes and trigger actions remotely.
+
+Power and Connectivity: The system operates using a 5V–12V power source. Wi-Fi connectivity is essential for communication between ESP32-CAM and the main ESP32, and for syncing with the Blynk Cloud.
+
+Manual and Auto Modes: The system supports both:
+
+Auto Mode: ESP32-CAM scans and triggers spraying autonomously.
+
+Manual Mode: Using Blynk or a joystick, users can manually control the movement and spraying.
+
+Application Scope:
+
+Home gardening
+
+Greenhouses
+
+Vertical farms
+
+Educational agriculture research
+
+Precision farming test beds
 
 🛠️ Technologies & Tools Used
 Hardware
@@ -40,7 +79,7 @@ Motion Control: CoreXY platform, stepper motors, L298N motor driver
 
 Actuators: Relay modules, water pump, buzzer
 
-Sensors: IR sensors, soil moisture sensor
+Sensors: DHT11 sensor (for humidity and temperature), soil moisture sensor
 
 Input: Joystick module
 
@@ -53,15 +92,14 @@ Programming Languages: C/C++
 
 Machine Learning: Edge Impulse Studio (for training and deploying the leaf disease detection model)
 
-Communication: Wi-Fi (for ESP32-CAM to ESP32 main board)
+IoT Platform: Blynk Cloud
 
-ML Framework
-Edge Impulse: Used for training and deploying the leaf disease detection model, optimizing it for embedded devices.
+Communication: Wi-Fi (for ESP32-CAM to ESP32 main board and Blynk Cloud)
 
 🧱 System Components
 ESP32-CAM: Captures plant images and runs the disease detection model.
 
-ESP32 Main Board: Receives detection signals and controls movement and spraying.
+ESP32 Main Board: Receives detection signals, controls movement and spraying, and communicates with Blynk Cloud.
 
 CoreXY Mechanism: An X-Y gantry system that moves the sprayer to the target plant.
 
@@ -77,28 +115,15 @@ Buzzer: Alerts when disease is detected.
 
 Joystick: For manual mode control of the CoreXY platform.
 
-Soil Moisture Sensor: (Optional) Detects water level in soil for future irrigation control.
+Soil Moisture Sensor: Detects water level in soil for future irrigation control.
 
-🔗 Communication Flow
-ESP32-CAM captures an image of each plant.
+DHT11 Sensor: For Humidity and Temperature near Plants.
 
-The image is processed by the onboard ML model for disease classification.
-
-If disease is detected, the ESP32-CAM sends data (either a disease flag or precise coordinates) over Wi-Fi to the main ESP32 board.
-
-The ESP32 main board receives the signal and activates the CoreXY mechanism to position the sprayer.
-
-The sprayer applies fertilizer through the relay-controlled pump.
-
-The buzzer remains ON until spraying is completed.
-
-⚙️ Modes of Operation
-Manual Mode: The user can control the CoreXY platform's movement using the joystick.
-
-Automatic Mode: The system autonomously scans each plant, detects diseases, and applies fertilizer as needed.
+Blynk Cloud and Mobile App: For remote monitoring, control, and alerts.
 
 🔁 Algorithm Flow (Simplified)
 graph TD
+
     A[Start Scan] --> B{ESP32-CAM Captures Image};
     B --> C{Image Processed by ML Model};
     C -- Disease Found --> D{Send Disease Signal/Coordinates to ESP32 Main Board via Wi-Fi};
@@ -106,9 +131,10 @@ graph TD
     E --> F[Activate CoreXY to Move to Target];
     F --> G[Trigger Pump to Spray];
     G --> H[Turn off Buzzer after Spraying];
-    H --> I[Move to Next Plant];
-    I --> B;
-    C -- No Disease Found --> I;
+    H --> I[Update Blynk Cloud with Status];
+    I --> J[Move to Next Plant];
+    J --> B;
+    C -- No Disease Found --> J;
 
 ✅ Features
 AI-powered plant disease detection for real-time analysis.
@@ -117,11 +143,15 @@ Wireless (Wi-Fi) ESP32-to-ESP32 communication for seamless data transfer.
 
 CoreXY robotic movement for precision targeting of affected areas.
 
+Remote monitoring and control via Blynk Cloud and mobile app.
+
 Low-cost and scalable solution, making it accessible for small and large-scale farmers.
 
 Automated disease alert and response system.
 
 Customizable scanning area and number of plants to adapt to various farm layouts.
+
+Dual modes of operation (Manual and Automatic) for enhanced versatility.
 
 🎯 Real-World Impact
 Saves fertilizer by spraying only where needed, reducing waste and environmental impact.
@@ -135,9 +165,9 @@ Can be scaled to large fields with enhanced navigation capabilities.
 A valuable tool for precision agriculture and sustainable farming practices.
 
 📍 Deployment Scenario
-The system was tested on a set of 6 money plants arranged in a row using a custom-built CoreXY platform. The ESP32-CAM was mounted at the scanning end, while the sprayer, pump, and relay were mounted on the CoreXY gantry. The entire system operates autonomously once powered and initiated, demonstrating its self-sufficiency.
+The system was tested on a set of 6 money plants arranged in a row using a custom-built CoreXY platform. The ESP32-CAM was mounted at the scanning end, while the sprayer, pump, and relay were mounted on the CoreXY gantry. The entire system operates autonomously once powered and initiated, with remote monitoring and control capabilities via Blynk, demonstrating its self-sufficiency.
 
-📦 Future Improvements
+🔮 Future Improvements
 Advanced Navigation: Add GPS or AI-based navigation for open field use, allowing deployment in larger, unstructured environments.
 
 Long-Range Communication: Integrate LoRa for long-range communication, extending the system's reach in vast agricultural areas.
@@ -156,6 +186,10 @@ Testing & Deployment: ~1 week
 Total: 4 months
 
 🤝 Contact
-KOVIRI SANDEEP - Gmail: koviri.sandeep@gmail.com- LinkedIn : www.linkedin.com/in/kovirisandeep
+KOVIRI SANDEEP
 
-Project Link: [[Link to this GitHub repository]](https://github.com/SandeepKoviri/AI-powered-IoT-Plant-Disease-Detector.git)
+Gmail: koviri.sandeep@gmail.com
+
+LinkedIn: www.linkedin.com/in/kovirisandeep
+
+Project Link: https://github.com/SandeepKoviri/AI-powered-IoT-Plant-Disease-Detector.git
