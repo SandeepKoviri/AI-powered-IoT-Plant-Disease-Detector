@@ -167,6 +167,62 @@ A valuable tool for precision agriculture and sustainable farming practices.
 📍 Deployment Scenario
 The system was tested on a set of 6 money plants arranged in a row using a custom-built CoreXY platform. The ESP32-CAM was mounted at the scanning end, while the sprayer, pump, and relay were mounted on the CoreXY gantry. The entire system operates autonomously once powered and initiated, with remote monitoring and control capabilities via Blynk, demonstrating its self-sufficiency.
 
+📦 Project Structure
+A brief overview of your directory structure:
+
+/src
+
+    /ai_model        # Trained AI models and Edge Impulse project files
+    /firmware        # C/C++ code for ESP32-CAM and ESP32 main board (Arduino IDE projects)
+    /blynk           # Blynk project setup (e.g., dashboard configuration, virtual pins)
+/docs
+
+    /schematics      # Circuit diagrams and wiring guides
+    /datasheets      # Component datasheets
+/media
+
+    /photos          # Project photos
+    /videos          # Demo videos
+README.md
+
+🚀 Getting Started
+Instructions on how someone could replicate your project:
+
+Clone the repository: git clone https://github.com/SandeepKoviri/AI-powered-IoT-Plant-Disease-Detector.git
+
+Hardware Setup:
+
+Assemble the CoreXY mechanism.
+
+Wire the ESP32-CAM, ESP32 main board, stepper motors, L298N drivers, relay, pump, buzzer, joystick, DHT11, and soil moisture sensor as per the schematics in  
+/docs/schematics.
+
+Ensure proper power supply connections (5V-12V).
+
+Software Setup:
+
+Arduino IDE: Install Arduino IDE and add ESP32 board support. Install necessary libraries (e.g., for Wi-Fi, stepper motors, Blynk, camera, DHT sensor).
+
+Edge Impulse: Set up your Edge Impulse project for leaf disease detection. Train and deploy your ML model to the ESP32-CAM.
+
+Blynk Cloud: Create a new project in Blynk Cloud. Design your mobile dashboard with appropriate widgets (buttons, displays, gauges) and link them to virtual pins used in your ESP32 firmware. Obtain your Blynk authentication token.
+
+Upload Firmware:
+
+Open the ESP32-CAM firmware project (from /src/firmware/esp32_cam_firmware) in Arduino IDE. Update Wi-Fi credentials.
+
+Open the ESP32 main board firmware project (from /src/firmware/esp32_main_firmware) in Arduino IDE. Update Wi-Fi credentials and Blynk authentication token.
+
+Upload the respective firmware to your ESP32-CAM and main ESP32 boards.
+
+Run the System:
+
+Power on the entire system.
+
+Connect your Blynk mobile app to the project using your authentication token.
+
+Observe the system in action, either in Manual or Automatic mode, and monitor data on your Blynk dashboard.
+
 🔮 Future Improvements
 Advanced Navigation: Add GPS or AI-based navigation for open field use, allowing deployment in larger, unstructured environments.
 
