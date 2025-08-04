@@ -2,6 +2,8 @@ AI-Powered IoT System for Plant Disease Detection and Automated Fertilizer Preci
 
 [Watch a demo of the AI-powered IoT system in action on Google Drive](https://drive.google.com/file/d/1RguORhYpgQR2I4bWk6TB-wsKrEVuRj2A/view?usp=drive_link)
 
+[Watch a Making video of the AI-powered IoT system in action on Google Drive](https://drive.google.com/file/d/1VeI0MQnWoe3blZJvuf_1zh6At3UTlhc7/view?usp=drive_link)
+
 📝 Project Summary
 This project is an innovative fusion of IoT, AI, and embedded systems, designed to automate the process of detecting plant diseases and applying fertilizers precisely. It addresses the limitations of manual crop monitoring and fertilizer application by using real-time disease detection and targeted spraying, making agriculture smarter and more sustainable.
 
